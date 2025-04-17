@@ -1,0 +1,25 @@
+{
+  "name": "signup-system",
+  "version": "1.0.0",
+  "description": "A signup system with a Node.js backend",
+  "main": "server.js",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "body-parser": "^1.20.3",
+    "connect-mongo": "^5.1.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "express-session": "^1.18.1",
+    "mongodb": "^6.15.0",
+    "mongoose": "^6.13.8",
+    "path": "^0.12.7",
+    "sqlite3": "^5.1.7"
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "keywords": []
+}

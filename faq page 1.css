@@ -1,0 +1,107 @@
+/* General Styling */
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #b2f5ea, #bee3f8); /* Light Blue Gradient */
+    color: #333;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    background-color: black; /* Black */
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+}
+
+h1 {
+    margin: 0;
+    font-size: 2.5em;
+}
+
+nav.options {
+    display: flex;
+    justify-content: center;
+    background-color: #333; /* Dark Gray */
+    padding: 10px 0;
+}
+
+nav.options a {
+    color: white; /* White */
+    text-decoration: none;
+    padding: 10px 20px;
+    margin: 0 5px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+nav.options a:hover {
+    background-color: #ff9800; /* Hover Effect Color */
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    flex: 1;
+}
+
+h2 {
+    text-align: center;
+    color: #2c3e50;
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 2em;
+}
+
+.faq {
+    width: 100%;
+    max-width: 800px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.faq h3 {
+    background-color: #007acc; /* Dark Blue */
+    color: white;
+    padding: 10px;
+    font-size: 1.2em;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.faq p {
+    display: none;
+    padding: 10px;
+    font-size: 1em;
+    background-color: #e9ecef;
+    border-left: 5px solid #007acc; /* Dark Blue */
+    border-radius: 0 5px 5px 0;
+}
+
+/* Footer */
+footer {
+    background-color: #333; /* Dark Gray */
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    width: 100%;
+    position: relative;
+    bottom: 0;
+    left: 0;
+    margin-top: auto; /* Ensures the footer stays at the bottom */
+}
+
+/* Responsive Styling */
+@media (max-width: 600px) {
+    .faq {
+        padding: 15px;
+    }
+}

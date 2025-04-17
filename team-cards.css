@@ -1,0 +1,105 @@
+/* Team Cards Styling */
+.team {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    margin: 30px 0;
+}
+
+.team-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: 280px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    padding-top: 30px; /* Added padding at top since no images */
+}
+
+.team-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+}
+
+.profile-image {
+    height: 200px;
+    overflow: hidden;
+    position: relative;
+}
+
+.profile-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.team-card:hover .profile-image img {
+    transform: scale(1.05);
+}
+
+.team-info {
+    padding: 20px;
+    text-align: center;
+}
+
+.team-info h3 {
+    font-size: 1.5rem;
+    margin: 0 0 5px;
+    color: #1e3c72;
+}
+
+.team-info .role {
+    color: #007BFF;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+.team-info .id-number {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+}
+
+.contact-info {
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+    margin-top: 15px;
+}
+
+.contact-info p {
+    margin: 5px 0;
+    color: #555;
+}
+
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.social-links a {
+    color: #1e3c72;
+    font-size: 1.2rem;
+    transition: color 0.3s ease;
+}
+
+.social-links a:hover {
+    color: #007BFF;
+}
+
+/* Media Queries */
+@media (max-width: 900px) {
+    .team {
+        gap: 20px;
+    }
+}
+
+@media (max-width: 600px) {
+    .team-card {
+        width: 100%;
+        max-width: 320px;
+    }
+}
