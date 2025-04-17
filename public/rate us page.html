@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Rate Us - Echo Power</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script defer src="script.js"></script>
+  <style>
+    /* General Styling */
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #b2f5ea, #bee3f8); /* Light Blue Gradient */
+    color: #333;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    background-color: black; /* Black */
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+}
+
+h1 {
+    margin: 0;
+    font-size: 2.5em;
+}
+
+nav.options {
+    display: flex;
+    justify-content: center;
+    background-color: #333; /* Dark Gray */
+    padding: 10px 0;
+}
+
+nav.options a {
+    color: white; /* White */
+    text-decoration: none;
+    padding: 10px 20px;
+    margin: 0 5px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+nav.options a:hover {
+    background-color: #ff9800; /* Hover Effect Color */
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    flex: 1;
+}
+
+h2 {
+    text-align: center;
+    color: #2c3e50;
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 2em;
+}
+
+.rate-us-container {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    max-width: 600px;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+p {
+    font-size: 1.2em;
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.rating {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.rating input {
+    display: none;
+}
+
+.rating label {
+    font-size: 2em;
+    color: #ccc;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.rating input:checked ~ label,
+.rating label:hover,
+.rating label:hover ~ label {
+    color: #007acc; /* Dark Blue */
+}
+
+textarea {
+    width: calc(100% - 20px);
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+    font-size: 1em;
+}
+
+input[type="text"],
+input[type="number"] {
+    width: calc(100% - 20px);
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+    font-size: 1em;
+}
+
+input[type="submit"] {
+    background-color: #007BFF; /* Blue */
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+    width: 100%;
+}
+
+input[type="submit"]:hover {
+    background-color: #0056b3; /* Darker Blue */
+}
+
+footer {
+    background-color: #333; /* Dark Gray */
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    width: 100%;
+    position: relative;
+    bottom: 0;
+    left: 0;
+    margin-top: auto; /* Ensures the footer stays at the bottom */
+}
+
+/* Responsive Styling */
+@media (max-width: 600px) {
+    .rate-us-container {
+        padding: 15px;
+    }
+
+    textarea, input[type="text"], input[type="number"], input[type="submit"] {
+        width: 100%;
+    }
+}
+
+/* Emoji animation */
+.emoji {
+    font-size: 2em;
+    text-align: center;
+    margin-top: 20px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.emoji.show {
+    transform: scale(1.5);
+}
+
+  </style>
+</head>
+<body>
+<header>
+  <h1>Echo Power</h1>
+</header>
+<nav class="options">
+  <a href="home.html">Home</a>
+  <a href="faqechopower.html">FAQ</a>
+  <a href="help page.html">Help</a>
+  <a href="rate calculation.html">Rate Calculator</a>
+  <a href="login.html">Login</a>
+  <a href="quickpaypage.html">Quickpay</a>
+  <a href="about us page.html">About Us</a>
+  <a href="rate us page.html">Rate us</a>
+  <a href="signup.html">Sign Up</a>
+</nav>
+<div class="container">
+  <h2>Rate Us</h2>
+  <p>We value your feedback! 📝 Please rate our service and leave your comments below:</p>
+
+  <form id="rate-us-form">
+    <label for="rating">How was your experience? 😊</label>
+    <div id="rating" class="rating">
+      <div class="rating-item">
+        <input type="radio" id="star5" name="rating" value="5" onclick="updateStars(5)">
+        <label for="star5" title="Amazing!">★</label>
+        <span>😁</span>
+      </div>
+      <div class="rating-item">
+        <input type="radio" id="star4" name="rating" value="4" onclick="updateStars(4)">
+        <label for="star4" title="Great!">★</label>
+        <span>😊</span>
+      </div>
+      <div class="rating-item">
+        <input type="radio" id="star3" name="rating" value="3" onclick="updateStars(3)">
+        <label for="star3" title="Good!">★</label>
+        <span>🙂</span>
+      </div>
+      <div class="rating-item">
+        <input type="radio" id="star2" name="rating" value="2" onclick="updateStars(2)">
+        <label for="star2" title="Could be better">★</label>
+        <span>😕</span>
+      </div>
+      <div class="rating-item">
+        <input type="radio" id="star1" name="rating" value="1" onclick="updateStars(1)">
+        <label for="star1" title="Not happy">★</label>
+        <span>😞</span>
+      </div>
+    </div>
+    <div id="emoji-container" class="emoji">😐</div>
+
+    <label for="q1">How would you rate your overall experience with our electricity billing system?</label>
+    <input type="text" id="q1" name="q1" placeholder="Your answer here...">
+
+    <label for="q2">Was the billing process clear and easy to understand?</label>
+    <input type="text" id="q2" name="q2" placeholder="Your answer here...">
+
+    <label for="q3">How satisfied are you with the accuracy of your electricity bill?</label>
+    <input type="text" id="q3" name="q3" placeholder="Your answer here...">
+
+    <label for="q4">Did you find the payment methods offered to be convenient?</label>
+    <input type="text" id="q4" name="q4" placeholder="Your answer here...">
+
+    <label for="q5">On a scale of 1 to 10, how likely are you to recommend our electricity billing system to a friend or colleague?</label>
+    <input type="number" id="q5" name="q5" min="1" max="10" placeholder="1-10">
+
+    <label for="comments">Your Thoughts 💬:</label>
+    <textarea id="comments" name="comments" rows="5" placeholder="Enter your comments here..."></textarea>
+
+    <input type="submit" value="Submit Feedback">
+  </form>
+</div>
+<footer>
+  <p>&copy; 2024 Echo Power. All rights reserved.</p>
+</footer>
+<script>
+  function updateStars(rating) {
+    const stars = document.querySelectorAll('.rating label');
+    stars.forEach((star, index) => {
+      if (index >= 5 - rating) {
+        star.style.color = 'gold';
+      } else {
+        star.style.color = '#ccc';
+      }
+    });
+    showEmoji(rating);
+  }
+
+  function showEmoji(rating) {
+    const emojiContainer = document.getElementById('emoji-container');
+    const emojis = ['😞', '😕', '🙂', '😊', '😁'];
+    emojiContainer.innerText = emojis[rating - 1];
+    emojiContainer.classList.add('show');
+    setTimeout(() => {
+      emojiContainer.classList.remove('show');
+    }, 600);
+  }
+</script>
+</body>
+</html>

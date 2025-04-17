@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Echo Power - Electricity Billing System</title>
+    <link rel="stylesheet" href="shared-styles.css">
+    <style>
+        .hero-section {
+            text-align: center;
+            padding: 3rem 1rem;
+            background: linear-gradient(135deg, #2a5298 0%, #1e3c72 100%);
+            color: white;
+            margin-bottom: 2rem;
+        }
+        
+        .hero-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero-section p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 0 1rem;
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .feature-card h3 {
+            color: #1e3c72;
+            margin-bottom: 1rem;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: #1e3c72;
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 1rem;
+            transition: background 0.3s ease;
+        }
+        
+        .cta-button:hover {
+            background: #2a5298;
+        }
+        
+        .marquee-container {
+            background: #ff9800;
+            color: white;
+            padding: 0.5rem;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Echo Power</h1>
+    </header>
+    
+    <nav class="options">
+        <a href="home.html">Home</a>
+        <a href="faqechopower.html">FAQ</a>
+        <a href="help%20page.html">Help</a>
+        <a href="rate%20calculation.html">Rate Calculator</a>
+        <a href="login.html">Login</a>
+        <a href="quickpaypage.html">Quickpay</a>
+        <a href="#">Profile</a>
+        <a href="about%20us%20page.html">About Us</a>
+        <a href="rate%20us%20page.html">Rate us</a>
+        <a href="signup.html">Sign Up</a>
+    </nav>
+    
+    <section class="marquee-container">
+        <marquee direction="left" scrollamount="5">
+            <p>Welcome to Echo Power Electricity Billing System. New users can register for quick and easy bill payments.</p>
+        </marquee>
+    </section>
+    
+    <div class="hero-section">
+        <h2>Welcome to Echo Power</h2>
+        <p>Your reliable partner in managing electricity bills efficiently and transparently</p>
+        <a href="signup.html" class="cta-button">Get Started</a>
+    </div>
+    
+    <div class="container">
+        <div class="features">
+            <div class="feature-card">
+                <h3>Easy Bill Payment</h3>
+                <p>Pay your electricity bills online through various payment methods with just a few clicks.</p>
+                <a href="quickpaypage.html" class="cta-button">Pay Now</a>
+            </div>
+            
+            <div class="feature-card">
+                <h3>Rate Calculator</h3>
+                <p>Calculate your expected bill amount using our convenient rate calculator tool.</p>
+                <a href="rate%20calculation.html" class="cta-button">Calculate</a>
+            </div>
+            
+            <div class="feature-card">
+                <h3>24/7 Support</h3>
+                <p>Get help anytime with our comprehensive FAQ section and support services.</p>
+                <a href="help%20page.html" class="cta-button">Get Help</a>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>&copy; 2024 Echo Power. All Rights Reserved.</p>
+    </footer>
+</body>
+</html>

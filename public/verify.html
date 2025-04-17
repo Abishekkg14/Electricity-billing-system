@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Verify Signup</title>
+</head>
+<body>
+    <h2>Verify User Registration</h2>
+    <input type="email" id="verifyEmail" placeholder="Enter email to verify">
+    <button onclick="verifyUser()">Verify</button>
+    <div id="result"></div>
+
+    <script>
+        async function verifyUser() {
+            const email = document.getElementById('verifyEmail').value;
+            try {
+                const response = await fetch(`http://localhost:3000/api/verify/${email}`);
+                const data = await response.json();
+                const resultDiv = document.getElementById('result');
+                
+                if (response.ok) {
+                    resultDiv.innerHTML = `
+                        <h3>User Found:</h3>
+                        <p>Username: ${data.username}</p>
+                        <p>Email: ${data.email}</p>
+                        <p>Created: ${new Date(data.createdAt).toLocaleString()}</p>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `<p style="color: red">${data.message}</p>`;
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('result').innerHTML = 
+                    '<p style="color: red">Error checking user</p>';
+            }
+        }
+    </script>
+</body>
+</html>

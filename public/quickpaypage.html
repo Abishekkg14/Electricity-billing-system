@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quick Pay</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+    background: linear-gradient(135deg, #2c3e50, #34495e); /* Dark Blue Gradient */
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #ecf0f1; /* Light Gray Text */
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    background-color: #1c2833; /* Darker Shade */
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+}
+
+h1 {
+    margin: 0;
+    font-size: 2.5em;
+}
+
+nav.options {
+    display: flex;
+    justify-content: center;
+    background-color: #212F3D; /* Dark Gray-Blue */
+    padding: 10px 0;
+}
+
+nav.options a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 20px;
+    margin: 0 5px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+nav.options a:hover {
+    background-color: #f1c40f; /* Yellow Highlight */
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    flex: 1;
+}
+
+.customer-details, .billing-details {
+    background-color: #34495e; /* Matching Dark Theme */
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    margin: 10px 0;
+    width: 100%;
+    max-width: 500px;
+    color: white;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: #f1c40f; /* Yellow Highlight */
+    font-weight: bold;
+}
+
+input[type="text"], input[type="number"], textarea, select {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #f1c40f;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 1em;
+    transition: border-color 0.3s;
+    background-color: #2c3e50;
+    color: white;
+}
+
+input[type="text"]:focus, input[type="number"]:focus, textarea:focus, select:focus {
+    border-color: #e67e22;
+    outline: none;
+}
+
+input[type="submit"] {
+    background-color: #f1c40f; /* Yellow Button */
+    color: black;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+    width: 100%;
+}
+
+input[type="submit"]:hover {
+    background-color: #d4ac0d; /* Darker Yellow */
+}
+
+footer {
+    background-color: #212F3D; /* Dark Gray-Blue */
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    width: 100%;
+    position: relative;
+    bottom: 0;
+}
+
+    </style>
+</head>
+
+<body>
+<header>
+    <h1>Echo Power</h1>
+</header>
+<nav class="options">
+    <a href="home.html">Home</a>
+    <a href="faqechopower.html">FAQ</a>
+    <a href="help%20page.html">Help</a>
+    <a href="rate%20calculation.html">Rate Calculator</a>
+    <a href="login%20page.html">Login</a>
+    <a href="quickpaypage.html">Quickpay</a>
+    <a href="#">Profile</a>
+    <a href="about%20us%20page.html">About Us</a>
+    <a href="rate%20us%20page.html">Rate us</a>
+    <a href="sign%20up%20page.html">Sign Up</a>
+</nav>
+<div class="container">
+    <h1>Echo Power Quick Pay</h1>
+    <p><b>Pay using UPI</b></p>
+    <p>Fill in the following details:</p>
+
+    <div class="customer-details">
+        <label for="customer1">Name:</label>
+        <input type="text" name="customer" id="customer1" placeholder="Enter your name here">
+
+        <label for="customer2">Phone Number:</label>
+        <input type="tel" name="customer" id="customer2" placeholder="Enter your 10-digit mobile number" 
+               maxlength="10" pattern="[0-9]{10}" title="Please enter exactly 10 digits"
+               style="border: 1px solid #f1c40f; background-color: #2c3e50; color: white;">
+        <p id="phoneError" style="color: #e74c3c; font-size: 0.8em; margin-top: -10px; margin-bottom: 15px; display: none;">
+            Please enter exactly 10 digits
+        </p>
+
+        <label for="customer3">Account No:</label>
+        <input type="text" name="customer" id="customer3" placeholder="Enter your 4-digit account no" 
+               maxlength="4" pattern="[0-9]{4}" title="Please enter exactly 4 digits">
+        <p id="accountError" style="color: #e74c3c; font-size: 0.8em; margin-top: -10px; display: none;">
+            Please enter exactly 4 digits
+        </p>
+
+        <label for="customer5">Meter No:</label>
+        <input type="text" id="customer5" placeholder="Enter your 3-digit meter no" 
+               maxlength="3" pattern="[0-9]{3}" title="Please enter exactly 3 digits">
+        <p id="meterError" style="color: #e74c3c; font-size: 0.8em; margin-top: -10px; display: none;">
+            Please enter exactly 3 digits
+        </p>
+
+        <label for="connection-type">Choose connection type:</label>
+        <select id="connection-type" name="connection-type">
+            <option value="single-phase">Single-phase</option>
+            <option value="three-phase">Three-phase</option>
+        </select>
+
+        <label for="customer4">Enter your address:</label>
+        <textarea name="customer" id="customer4" rows="5" placeholder="Enter your billing address:"></textarea>
+    </div>
+
+    <form id="billingForm">
+        <div class="billing-details">
+            <h2>Details required for billing:</h2>
+            <label for="previous_reading">Previous reading:</label>
+            <input type="number" id="previous_reading" name="previous_reading" placeholder="Enter your previous reading:" required>
+            <label for="current_reading">Current reading:</label>
+            <input type="number" id="current_reading" name="current_reading" placeholder="Enter your current reading:" required>
+            <label for="rate-per-unit">Rate per unit:</label>
+            <input type="number" id="rate-per-unit" name="rate_per_unit" placeholder="Enter your rate per unit:" required>
+            <label for="fixed-charges">Fixed charges:</label>
+            <input type="number" id="fixed-charges" name="fixed_charges" placeholder="Enter your fixed charges:" required>
+            <label for="other-charges">Other charges:</label>
+            <input type="number" id="other-charges" name="other_charges" placeholder="Enter your other charges:" required>
+        </div>
+        <input type="submit" value="Generate Bill" id="generate-bill">
+    </form>
+</div>
+<footer>
+    <p>&copy; 2024 Echo Power. All rights reserved.</p>
+</footer>
+
+<div id="billResult" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0,0,0,0.8); z-index: 1000; display: flex; justify-content: center; align-items: center;">
+    <div style="background-color: #34495e; padding: 30px; border-radius: 10px; max-width: 500px; width: 100%; box-shadow: 0 0 20px rgba(0,0,0,0.5);">
+        <h2 style="color: #f1c40f; text-align: center; margin-bottom: 20px;">Bill Summary</h2>
+        <div id="billDetails" style="color: white; margin-bottom: 20px;"></div>
+        <div style="background-color: #2c3e50; padding: 15px; border-radius: 5px; margin-bottom: 20px;">
+            <h3 style="color: #f1c40f; margin-bottom: 10px;">Payment Details</h3>
+            <p style="color: white; margin-bottom: 5px;"><strong>GPay Number:</strong> 9150756733</p>
+            <p style="color: white; margin-bottom: 5px;"><strong>UPI ID:</strong> echopower@ybl</p>
+        </div>
+        <button onclick="closeModal()" style="background-color: #f1c40f; color: black; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; width: 100%;">Close</button>
+    </div>
+</div>
+
+<script>
+    // Add validation for input fields with improved styling feedback
+    document.getElementById('customer2').addEventListener('input', function() {
+        const value = this.value;
+        const errorElement = document.getElementById('phoneError');
+        
+        // Remove non-digit characters
+        this.value = value.replace(/\D/g, '');
+        
+        // Check if length is valid and update styling
+        if (this.value.length > 0 && this.value.length !== 10) {
+            errorElement.style.display = 'block';
+            this.style.borderColor = '#e74c3c'; // Red border for error
+        } else {
+            errorElement.style.display = 'none';
+            if (this.value.length === 10) {
+                this.style.borderColor = '#2ecc71'; // Green border for valid input
+            } else {
+                this.style.borderColor = '#f1c40f'; // Default border color
+            }
+        }
+    });
+    
+    document.getElementById('customer3').addEventListener('input', function() {
+        const value = this.value;
+        const errorElement = document.getElementById('accountError');
+        
+        // Remove non-digit characters
+        this.value = value.replace(/\D/g, '');
+        
+        // Check if length is valid
+        if (this.value.length > 0 && this.value.length !== 4) {
+            errorElement.style.display = 'block';
+        } else {
+            errorElement.style.display = 'none';
+        }
+    });
+    
+    document.getElementById('customer5').addEventListener('input', function() {
+        const value = this.value;
+        const errorElement = document.getElementById('meterError');
+        
+        // Remove non-digit characters
+        this.value = value.replace(/\D/g, '');
+        
+        // Check if length is valid
+        if (this.value.length > 0 && this.value.length !== 3) {
+            errorElement.style.display = 'block';
+        } else {
+            errorElement.style.display = 'none';
+        }
+    });
+
+    // Get form element
+    const billingForm = document.getElementById('billingForm');
+    
+    // Add submit event listener
+    billingForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+        
+        // Validate required fields
+        const phoneNumber = document.getElementById('customer2').value;
+        const accountNo = document.getElementById('customer3').value;
+        const meterNo = document.getElementById('customer5').value;
+        
+        // Validate phone number
+        if (phoneNumber.length !== 10) {
+            document.getElementById('phoneError').style.display = 'block';
+            document.getElementById('customer2').focus();
+            return;
+        }
+        
+        // Validate account number
+        if (accountNo.length !== 4) {
+            document.getElementById('accountError').style.display = 'block';
+            document.getElementById('customer3').focus();
+            return;
+        }
+        
+        // Validate meter number
+        if (meterNo.length !== 3) {
+            document.getElementById('meterError').style.display = 'block';
+            document.getElementById('customer5').focus();
+            return;
+        }
+        
+        // Get other input values
+        const name = document.getElementById('customer1').value;
+        const connectionType = document.getElementById('connection-type').value;
+        const address = document.getElementById('customer4').value;
+        
+        // Get input values
+        const previousReading = parseFloat(document.getElementById('previous_reading').value) || 0;
+        const currentReading = parseFloat(document.getElementById('current_reading').value) || 0;
+        const ratePerUnit = parseFloat(document.getElementById('rate-per-unit').value) || 0;
+        const fixedCharges = parseFloat(document.getElementById('fixed-charges').value) || 0;
+        const otherCharges = parseFloat(document.getElementById('other-charges').value) || 0;
+        
+        // Calculate units consumed
+        const unitsConsumed = currentReading - previousReading;
+        
+        // Apply rate calculation logic
+        let rateAmount = unitsConsumed * ratePerUnit;
+        
+        // Apply slab-wise rate if applicable (just an example logic)
+        if (connectionType === 'three-phase') {
+            // Three-phase connections might have different rate structure
+            rateAmount *= 1.2; // 20% higher rate for three-phase
+        }
+        
+        // Calculate total bill amount
+        const totalAmount = rateAmount + fixedCharges + otherCharges;
+        
+        // Format to 2 decimal places
+        const formattedTotal = totalAmount.toFixed(2);
+        
+        // Generate bill details HTML
+        const billDetailsHTML = `
+            <div style="margin-bottom: 15px;">
+                <p><strong>Name:</strong> ${name || 'Not provided'}</p>
+                <p><strong>Account No:</strong> ${accountNo || 'Not provided'}</p>
+                <p><strong>Meter No:</strong> ${meterNo || 'Not provided'}</p>
+                <p><strong>Connection Type:</strong> ${connectionType}</p>
+            </div>
+            <div style="margin-bottom: 15px;">
+                <p><strong>Previous Reading:</strong> ${previousReading} units</p>
+                <p><strong>Current Reading:</strong> ${currentReading} units</p>
+                <p><strong>Units Consumed:</strong> ${unitsConsumed} units</p>
+            </div>
+            <div style="margin-bottom: 15px;">
+                <p><strong>Rate per Unit:</strong> ₹${ratePerUnit}</p>
+                <p><strong>Energy Charges:</strong> ₹${rateAmount.toFixed(2)}</p>
+                <p><strong>Fixed Charges:</strong> ₹${fixedCharges}</p>
+                <p><strong>Other Charges:</strong> ₹${otherCharges}</p>
+                <p style="font-size: 1.2em; color: #f1c40f; margin-top: 10px;"><strong>Total Amount Due:</strong> ₹${formattedTotal}</p>
+            </div>
+        `;
+        
+        // Display the bill details
+        document.getElementById('billDetails').innerHTML = billDetailsHTML;
+        document.getElementById('billResult').style.display = 'flex';
+    });
+    
+    // Function to close the modal
+    function closeModal() {
+        document.getElementById('billResult').style.display = 'none';
+    }
+</script>
+</body>
+</html>

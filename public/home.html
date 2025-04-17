@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home Page</title>
+    <style>
+        /* Base resets and typography */
+        body {
+            font-family: Arial, sans-serif;
+            background: #e8eff5;
+            margin: 0;
+            padding: 0;
+        }
+        /* Navigation bar styling */
+        nav {
+            background: #0077cc;
+            padding: 10px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 18px;
+            padding: 6px 12px;
+        }
+        nav a:hover {
+            background: #005fa3;
+            border-radius: 4px;
+        }
+        /* Container styling */
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        /* Profile section styling */
+        .profile {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .profile h1 {
+            font-size: 36px;
+            color: #333;
+        }
+        .profile p {
+            font-size: 18px;
+            color: #555;
+        }
+        button.logout {
+            background: #ff6666;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button.logout:hover {
+            background: #ff4444;
+        }
+        /* Section styling */
+        section {
+            margin-bottom: 30px;
+        }
+        section h2 {
+            font-size: 28px;
+            color: #0077cc;
+            border-bottom: 2px solid #0077cc;
+            padding-bottom: 8px;
+            margin-bottom: 15px;
+        }
+        section p {
+            font-size: 16px;
+            line-height: 1.5;
+            color: #666;
+        }
+        /* Footer styling */
+        footer {
+            background: #0077cc;
+            color: #fff;
+            text-align: center;
+            padding: 15px 0;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <nav style="overflow-x: auto;">
+        <a href="/home.html">Home</a>
+        <a href="/users.html">Users</a>
+        <a href="/verification.html">Verify Signup</a>
+        <a href="/status.html">System Status</a>
+        <a href="/login.html">Login</a>
+        <a href="/signup.html">Sign Up</a>
+        <a href="/faqechopower.html">FAQ Echo Power</a>
+        <a href="/help%20page.html">Help</a>
+        <a href="/quickpaypage.html">Quick Pay</a>
+        <a href="/rate%20calculation.html">Rate Calculation</a>
+        <a href="/rate%20us%20page.html">Rate Us</a>
+        <a href="/about%20us%20page.html">About Us</a>
+    </nav>
+    <div class="container">
+        <div class="profile">
+            <h1>Welcome, <span id="profileName"></span>!</h1>
+            <p id="profileDetails">Your profile details will be shown here.</p>
+            <button class="logout" onclick="logout()">Logout</button>
+        </div>
+        <section>
+            <h2>About Our System</h2>
+            <p>
+                Welcome to the Electricity Billing System, your modern solution for managing and monitoring electricity usage. Our platform provides detailed billing, usage statistics, and alerts to help you control your consumption.
+            </p>
+        </section>
+        <section>
+            <h2>Latest Updates</h2>
+            <p>
+                Stay updated with our latest news, features, and important announcements. We are continuously enhancing our service for an improved user experience.
+            </p>
+        </section>
+    </div>
+    <footer>
+        &copy; 2023 Electricity Billing System. All rights reserved.
+    </footer>
+    <script>
+        console.log('Home page loaded at:', new Date().toLocaleString());
+        const username = localStorage.getItem('loggedInUsername');
+        if (!username) {
+            document.getElementById('profileName').textContent = 'User Not Logged In';
+            document.getElementById('profileDetails').textContent = 'No profile details available.';
+        } else {
+            document.getElementById('profileName').textContent = username;
+            const email = localStorage.getItem('loggedInEmail');
+            document.getElementById('profileDetails').textContent = email ? 'Email: ' + email : 'Welcome to your profile!';
+        }
+        function logout() {
+            localStorage.removeItem('loggedInUsername');
+            localStorage.removeItem('loggedInEmail');
+            window.location.href = '/login.html';
+        }
+    </script>
+</body>
+</html>

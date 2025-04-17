@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Check Users</title>
+    <style>
+        body { font-family: Arial; margin: 0; padding: 20px; background: #f0f0f0; }
+        .container { 
+            max-width: 800px; 
+            margin: 20px auto; 
+            padding: 20px; 
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .search-box {
+            margin: 20px 0;
+            padding: 10px;
+            background: #f8f8f8;
+            border-radius: 4px;
+        }
+        input { padding: 10px; width: 70%; margin-right: 10px; }
+        button { 
+            padding: 10px 20px; 
+            background: #4CAF50; 
+            color: white; 
+            border: none; 
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .user-item { 
+            padding: 15px; 
+            margin: 10px 0; 
+            border: 1px solid #ddd; 
+            border-radius: 4px;
+        }
+        #debug { 
+            margin-top: 20px; 
+            padding: 10px; 
+            background: #f8f8f8; 
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>User Management System</h1>
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Search by username or email">
+            <button onclick="checkUser()">Search</button>
+        </div>
+        <div id="result"></div>
+        <hr>
+        <h2>Registered Users</h2>
+        <div class="api-testing" style="margin-bottom: 15px; padding: 10px; background: #f8f8f8; border-radius: 4px;">
+            <h3>API Status</h3>
+            <div>
+                <button onclick="testEndpoint('/api/test-server')">Test Server API</button>
+                <button onclick="testEndpoint('/api/users')">Test Users API</button>
+                <button onclick="testEndpoint('/api/test-db')">Test DB Connection</button>
+            </div>
+            <div id="apiStatus" style="margin-top: 10px; padding: 5px;"></div>
+        </div>
+        <button onclick="loadUsers()">Refresh List</button>
+        <div id="usersList"></div>
+        <div id="debug"></div>
+        <div id="serverStatus" style="margin-top: 15px; padding: 10px; background: #f0f0f0; border-radius: 4px;">
+            <h3>Server Status</h3>
+            <button onclick="checkServerStatus()">Check Server Connection</button>
+            <p id="serverMessage"></p>
+        </div>
+    </div>
+
+    <script>
+        // Add immediate error logging
+        window.onerror = function(msg, url, line) {
+            console.error('Error:', msg, 'at', url, ':', line);
+            document.getElementById('debug').innerHTML += `
+                <div style="color: red">
+                    Error: ${msg}<br>
+                    At: ${url}:${line}
+                </div>`;
+        };
+
+        // Add this at the start of script
+        console.log('Check-user page loaded at:', new Date().toLocaleString());
+        console.log('Page URL:', window.location.href);
+        
+        // Debug info
+        function logDebug(message) {
+            console.log(message);
+            const debug = document.getElementById('debug');
+            debug.innerHTML += `<div>${new Date().toLocaleString()} - ${message}</div>`;
+        }
+
+        // Add page load verification
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('Page loaded at:', new Date().toLocaleString());
+            document.getElementById('debug').innerHTML = `
+                <div>Page loaded at: ${new Date().toLocaleString()}</div>
+                <div>URL: ${window.location.href}</div>
+            `;
+            
+            // Test the server connection first
+            testEndpoint('/api/test-server');
+            
+            // Then try to load users with a slight delay
+            setTimeout(loadUsers, 500);
+        });
+
+        async function checkUser() {
+            const search = document.getElementById('searchInput').value;
+            if (!search) return;
+            
+            logDebug(`Searching for: ${search}`);
+            try {
+                const response = await fetch(`/api/check-user?search=${encodeURIComponent(search)}`);
+                const data = await response.json();
+                
+                document.getElementById('result').innerHTML = `
+                    <div class="user-item" style="background: ${data.exists ? '#fee' : '#efe'}">
+                        ${data.exists ? '❌' : '✅'} ${data.message}
+                    </div>`;
+            } catch (error) {
+                logDebug(`Error: ${error.message}`);
+                document.getElementById('result').innerHTML = 
+                    `<div class="user-item" style="background: #fee">Error: ${error.message}</div>`;
+            }
+        }
+
+        async function loadUsers() {
+            logDebug('Loading users list');
+            document.getElementById('usersList').innerHTML = '<p><em>Loading users...</em></p>';
+            
+            try {
+                const response = await fetch('/api/users', {
+                    headers: {
+                        'Accept': 'application/json',
+                        'Cache-Control': 'no-cache'
+                    }
+                });
+                
+                logDebug(`Users API response status: ${response.status}`);
+                
+                // Check if response is JSON
+                const contentType = response.headers.get('content-type');
+                if (!contentType || !contentType.includes('application/json')) {
+                    logDebug(`Error: Server returned non-JSON response (${contentType})`);
+                    document.getElementById('usersList').innerHTML = `
+                        <div class="user-item" style="color: red">
+                            <h3>API Error</h3>
+                            <p>The server returned a non-JSON response. This usually means:</p>
+                            <ul style="margin-left: 20px; list-style: disc;">
+                                <li>The server is not running correctly</li>
+                                <li>The API endpoint '/api/users' doesn't exist</li>
+                                <li>You're getting an HTML error page instead of JSON data</li>
+                            </ul>
+                            <p style="margin-top: 10px"><strong>Try using the API testing buttons above to diagnose the issue</strong></p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                const users = await response.json();
+                
+                const usersList = document.getElementById('usersList');
+                if (users.length === 0) {
+                    usersList.innerHTML = `
+                        <p>No users found in database.</p>
+                        <p style="color:#666; font-size:0.9em;">Try creating a user account first by going to the signup page.</p>
+                    `;
+                    return;
+                }
+
+                usersList.innerHTML = users.map(user => `
+                    <div class="user-item">
+                        <h3>${user.username}</h3>
+                        <p>Email: ${user.email}</p>
+                        <p>Created: ${new Date(user.createdAt).toLocaleString()}</p>
+                    </div>
+                `).join('');
+                
+                logDebug(`Loaded ${users.length} users`);
+            } catch (error) {
+                logDebug(`Error loading users: ${error.message}`);
+                document.getElementById('usersList').innerHTML = `
+                    <div class="user-item" style="color: red">
+                        <h3>Connection Error</h3>
+                        <p>Error loading users: ${error.message}</p>
+                        <p>Please check if the server is running.</p>
+                    </div>
+                `;
+            }
+        }
+        
+        async function checkServerStatus() {
+            const serverMessage = document.getElementById('serverMessage');
+            serverMessage.innerHTML = '<em>Checking server status...</em>';
+            serverMessage.style.color = 'blue';
+            
+            try {
+                const response = await fetch('/api/test-server', {
+                    // Add a cache-busting parameter
+                    cache: 'no-store'
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    serverMessage.innerHTML = `
+                        <span style="color: green">✓ Server is running</span><br>
+                        Uptime: ${Math.floor(data.serverUptime || 0)} seconds<br>
+                        Time: ${data.timestamp || new Date().toISOString()}
+                    `;
+                    serverMessage.style.color = 'green';
+                    logDebug('Server connection successful');
+                } else {
+                    serverMessage.innerHTML = `
+                        <span style="color: orange">⚠ Server responded with status: ${response.status}</span><br>
+                        Please check server logs for issues.
+                    `;
+                    serverMessage.style.color = 'orange';
+                }
+            } catch (error) {
+                serverMessage.innerHTML = `
+                    <span style="color: red">✗ Server connection failed</span><br>
+                    Error: ${error.message}<br>
+                    Please make sure the server is running.
+                `;
+                serverMessage.style.color = 'red';
+                logDebug(`Server connection error: ${error.message}`);
+            }
+        }
+
+        async function testEndpoint(endpoint) {
+            const statusDiv = document.getElementById('apiStatus');
+            statusDiv.innerHTML = `<em>Testing endpoint: ${endpoint}...</em>`;
+            
+            try {
+                const response = await fetch(endpoint, {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Cache-Control': 'no-cache'
+                    }
+                });
+                
+                logDebug(`Endpoint ${endpoint} response status: ${response.status}`);
+                
+                const contentType = response.headers.get('content-type');
+                statusDiv.innerHTML = `
+                    <div>
+                        <b>Endpoint:</b> ${endpoint}<br>
+                        <b>Status:</b> ${response.status} ${response.statusText}<br>
+                        <b>Content-Type:</b> ${contentType || 'Not specified'}<br>
+                    </div>
+                `;
+                
+                if (contentType && contentType.includes('application/json')) {
+                    try {
+                        const data = await response.json();
+                        statusDiv.innerHTML += `
+                            <div style="margin-top: 5px; padding: 5px; background: #e8f5e8; border-radius: 4px;">
+                                <b>JSON Response:</b> <pre style="overflow: auto; max-height: 150px;">${JSON.stringify(data, null, 2)}</pre>
+                            </div>
+                        `;
+                    } catch (jsonError) {
+                        statusDiv.innerHTML += `
+                            <div style="color: orange; margin-top: 5px;">
+                                <b>Warning:</b> Response claimed to be JSON but parsing failed: ${jsonError.message}
+                            </div>
+                        `;
+                    }
+                } else {
+                    // Not JSON, display the text content
+                    const text = await response.text();
+                    statusDiv.innerHTML += `
+                        <div style="color: orange; margin-top: 5px;">
+                            <b>Warning:</b> Response is not JSON (first 100 characters):<br>
+                            <pre style="overflow: auto; max-height: 100px; background: #fff; padding: 5px; border: 1px solid #ddd;">${text.slice(0, 100)}${text.length > 100 ? '...' : ''}</pre>
+                        </div>
+                    `;
+                }
+                
+            } catch (error) {
+                logDebug(`Endpoint ${endpoint} error: ${error.message}`);
+                statusDiv.innerHTML = `
+                    <div style="color: red;">
+                        <b>Error testing ${endpoint}:</b> ${error.message}<br>
+                        This likely means the server is not running or the endpoint doesn't exist.
+                    </div>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>

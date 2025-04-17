@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Rate Calculator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            background: linear-gradient(135deg, #b2f5ea, #bee3f8);
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background-color: black;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        nav.options {
+            display: flex;
+            justify-content: center;
+            background-color: #333;
+            padding: 10px 0;
+        }
+
+        nav.options a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            margin: 0 5px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        nav.options a:hover {
+            background-color: #ff9800;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background: #007BFF;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            background: #e8f5e9;
+            border-radius: 4px;
+            display: none;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Echo Power</h1>
+    </header>
+    <nav class="options">
+        <a href="home.html">Home</a>
+        <a href="faqechopower.html">FAQ</a>
+        <a href="help%20page.html">Help</a>
+        <a href="rate%20calculation.html">Rate Calculator</a>
+        <a href="/login.html">Login</a>
+        <a href="quickpaypage.html">Quickpay</a>
+        <a href="#">Profile</a>
+        <a href="about%20us%20page.html">About Us</a>
+        <a href="rate%20us%20page.html">Rate us</a>
+        <a href="/signup.html">Sign Up</a>
+    </nav>
+
+    <div class="container">
+        <h2>Electricity Rate Calculator</h2>
+        <form id="calculatorForm" onsubmit="return calculateBill(event)">
+            <div class="form-group">
+                <label for="units">Number of Units Consumed:</label>
+                <input type="number" id="units" required min="0">
+            </div>
+            <div class="form-group">
+                <label for="rate">Rate per Unit (INR):</label>
+                <input type="number" id="rate" required min="0" step="0.01">
+            </div>
+            <div class="form-group">
+                <label for="fixed">Fixed Charges (INR):</label>
+                <input type="number" id="fixed" required min="0" step="0.01">
+            </div>
+            <button type="submit">Calculate Bill</button>
+        </form>
+        <div id="result"></div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Echo Power. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function calculateBill(event) {
+            event.preventDefault(); // Prevent form submission
+            
+            const units = parseFloat(document.getElementById('units').value);
+            const rate = parseFloat(document.getElementById('rate').value);
+            const fixed = parseFloat(document.getElementById('fixed').value);
+            const result = document.getElementById('result');
+
+            // Validation
+            if (isNaN(units) || isNaN(rate) || isNaN(fixed)) {
+                alert('Please enter valid numbers in all fields');
+                return false;
+            }
+
+            if (units < 0 || rate < 0 || fixed < 0) {
+                alert('Please enter positive values only');
+                return false;
+            }
+
+            // Calculation
+            const total = (units * rate) + fixed;
+            
+            // Display result with styling
+            result.style.display = 'block';
+            result.style.marginTop = '20px';
+            result.style.padding = '15px';
+            result.style.backgroundColor = '#e8f5e9';
+            result.style.borderRadius = '4px';
+            result.style.boxShadow = '0 2px 4px rgba(0,0,0,0.1)';
+            
+            result.innerHTML = `
+                <h3 style="color: #2c3e50; margin-top: 0;">Bill Calculation Results</h3>
+                <p><strong>Units Consumed:</strong> ${units.toFixed(2)} units</p>
+                <p><strong>Rate per Unit:</strong> ₹${rate.toFixed(2)}</p>
+                <p><strong>Fixed Charges:</strong> ₹${fixed.toFixed(2)}</p>
+                <p style="font-size: 1.2em; color: #2c3e50; margin-top: 15px;">
+                    <strong>Total Bill Amount: ₹${total.toFixed(2)}</strong>
+                </p>`;
+
+            return false; // Prevent form submission
+        }
+
+        // Clear result when inputs change
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('input', () => {
+                document.getElementById('result').style.display = 'none';
+            });
+        });
+    </script>
+</body>
+</html>

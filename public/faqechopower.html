@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Electricity Bill FAQ</title>
+    <style>
+        /* General Styling */
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #b2f5ea, #bee3f8); /* Light Blue Gradient */
+    color: #333;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    background-color: black; /* Black */
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+}
+
+h1 {
+    margin: 0;
+    font-size: 2.5em;
+}
+
+nav.options {
+    display: flex;
+    justify-content: center;
+    background-color: #333; /* Dark Gray */
+    padding: 10px 0;
+}
+
+nav.options a {
+    color: white; /* White */
+    text-decoration: none;
+    padding: 10px 20px;
+    margin: 0 5px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+nav.options a:hover {
+    background-color: #ff9800; /* Hover Effect Color */
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    flex: 1;
+}
+
+h2 {
+    text-align: center;
+    color: #2c3e50;
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 2em;
+}
+
+.faq {
+    width: 100%;
+    max-width: 800px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.faq h3 {
+    background-color: #007acc; /* Dark Blue */
+    color: white;
+    padding: 10px;
+    font-size: 1.2em;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.faq p {
+    display: none;
+    padding: 10px;
+    font-size: 1em;
+    background-color: #e9ecef;
+    border-left: 5px solid #007acc; /* Dark Blue */
+    border-radius: 0 5px 5px 0;
+}
+
+/* Footer */
+footer {
+    background-color: #333; /* Dark Gray */
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    width: 100%;
+    position: relative;
+    bottom: 0;
+    left: 0;
+    margin-top: auto; /* Ensures the footer stays at the bottom */
+}
+
+/* Responsive Styling */
+@media (max-width: 600px) {
+    .faq {
+        padding: 15px;
+    }
+}
+    </style>
+</head>
+<body>
+<header>
+    <h1>Echo Power</h1>
+</header>
+<nav class="options">
+    <a href="home.html">Home</a>
+    <a href="faqechopower.html">FAQ</a>
+    <a href="help%20page.html">Help</a>
+    <a href="rate%20calculation.html">Rate Calculator</a>
+    <a href="login%20page.html">Login</a>
+    <a href="quickpaypage.html">Quickpay</a>
+    <a href="#">Profile</a>
+    <a href="about%20us%20page.html">About Us</a>
+    <a href="rate%20us%20page.html">Rate us</a>
+    <a href="sign%20up%20page.html">Sign Up</a>
+</nav>
+<div class="container">
+    <h2>Electricity Bill FAQ</h2>
+    <div class="faq">
+        <h3 onclick="toggleAnswer(this)">1. How is my electricity bill calculated?</h3>
+        <p>Electricity bills are calculated based on the units consumed multiplied by the tariff rate, including additional service charges and taxes.</p>
+    </div>
+    <div class="faq">
+        <h3 onclick="toggleAnswer(this)">2. How can I pay my electricity bill?</h3>
+        <p>You can pay your bill online through the electricity provider’s website, mobile app, or at authorized payment centers.</p>
+    </div>
+    <div class="faq">
+        <h3 onclick="toggleAnswer(this)">3. What should I do if my bill is incorrect?</h3>
+        <p>If your bill seems incorrect, contact customer service with your bill details for verification and correction.</p>
+    </div>
+    <div class="faq">
+        <h3 onclick="toggleAnswer(this)">4. How can I check my electricity bill online?</h3>
+        <p>You can check your bill online by logging into the electricity provider’s website or mobile app.</p>
+    </div>
+    <div class="faq">
+        <h3 onclick="toggleAnswer(this)">5. What happens if I don’t pay my bill on time?</h3>
+        <p>Late payments may result in penalties, disconnection of service, or additional reconnection fees.</p>
+    </div>
+    <div class="faq">
+        <h3 onclick="toggleAnswer(this)">6. Can I get a duplicate bill?</h3>
+        <p>Yes, you can generate a duplicate bill online through the provider’s website or by visiting their office.</p>
+    </div>
+    <div class="faq">
+        <h3 onclick="toggleAnswer(this)">7. How can I reduce my electricity bill?</h3>
+        <p>Reducing energy consumption, using energy-efficient appliances, and unplugging unused devices can help lower your bill.</p>
+    </div>
+    <div class="faq">
+        <h3 onclick="toggleAnswer(this)">8. Why is my electricity bill higher than usual?</h3>
+        <p>Seasonal usage changes, faulty appliances, or increased consumption can lead to a higher bill.</p>
+    </div>
+    <div class="faq">
+        <h3 onclick="toggleAnswer(this)">9. Can I apply for a subsidy on my electricity bill?</h3>
+        <p>Some households qualify for government subsidies. Check with your provider for eligibility.</p>
+    </div>
+    <div class="faq">
+        <h3 onclick="toggleAnswer(this)">10. How do I report a power outage?</h3>
+        <p>You can report outages to your electricity provider via their hotline or online complaint system.</p>
+    </div>
+</div>
+<footer>
+    <p>&copy; 2024 Echo Power. All Rights Reserved.</p>
+</footer>
+
+<script>
+    // Remove all previous script code and replace with this:
+    document.addEventListener('DOMContentLoaded', function() {
+        // Set initial state for all answers
+        document.querySelectorAll('.faq p').forEach(p => {
+            p.style.display = 'none';
+        });
+
+        // Add click handlers to all question headers
+        document.querySelectorAll('.faq h3').forEach(header => {
+            header.style.cursor = 'pointer';
+            header.addEventListener('click', function() {
+                // Get the answer paragraph
+                const answer = this.nextElementSibling;
+                // Get all other answers
+                const allAnswers = document.querySelectorAll('.faq p');
+                
+                // Close all other answers first
+                allAnswers.forEach(p => {
+                    if (p !== answer) {
+                        p.style.display = 'none';
+                        p.previousElementSibling.style.borderRadius = '5px';
+                    }
+                });
+
+                // Toggle the clicked answer
+                if (answer.style.display === 'block') {
+                    answer.style.display = 'none';
+                    this.style.borderRadius = '5px';
+                } else {
+                    answer.style.display = 'block';
+                    this.style.borderRadius = '5px 5px 0 0';
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>

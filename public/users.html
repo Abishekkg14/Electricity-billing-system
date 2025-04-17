@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>All Users</title>
+</head>
+<body>
+    <h2>Registered Users</h2>
+    <button onclick="loadUsers()">Load Users</button>
+    <div id="usersList"></div>
+
+    <script>
+        async function loadUsers() {
+            try {
+                const response = await fetch('http://localhost:3000/api/users');
+                const users = await response.json();
+                const usersList = document.getElementById('usersList');
+                
+                usersList.innerHTML = users.map(user => `
+                    <div style="margin: 10px; padding: 10px; border: 1px solid #ccc;">
+                        <p>Username: ${user.username}</p>
+                        <p>Email: ${user.email}</p>
+                        <p>Created: ${new Date(user.createdAt).toLocaleString()}</p>
+                    </div>
+                `).join('');
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('usersList').innerHTML = 
+                    '<p style="color: red">Error loading users</p>';
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>System Status</title>
+    <style>
+        .status { padding: 20px; margin: 10px; border-radius: 5px; }
+        .online { background: #e6ffe6; color: green; }
+        .error { background: #ffe6e6; color: red; }
+    </style>
+</head>
+<body>
+    <h1>System Status Dashboard</h1>
+    <button onclick="checkStatus()">Refresh Status</button>
+    <div id="status" class="status"></div>
+
+    <script>
+        async function checkStatus() {
+            try {
+                const response = await fetch('http://localhost:3000/api/test-db');
+                const data = await response.json();
+                const statusDiv = document.getElementById('status');
+                
+                if (data.success) {
+                    const info = data.connectionInfo;
+                    statusDiv.className = 'status online';
+                    statusDiv.innerHTML = `
+                        <h2>✅ System Online</h2>
+                        <p>Server Uptime: ${Math.floor(info.serverUptime)} seconds</p>
+                        <p>Database: ${info.dbName}</p>
+                        <p>Collections: ${info.collections.join(', ')}</p>
+                        <p>Users Count: ${info.usersCount || 0}</p>
+                        <p>Last Checked: ${new Date().toLocaleString()}</p>
+                    `;
+                }
+            } catch (error) {
+                document.getElementById('status').className = 'status error';
+                document.getElementById('status').innerHTML = `
+                    <h2>❌ System Error</h2>
+                    <p>Error: ${error.message}</p>
+                    <p>Last Checked: ${new Date().toLocaleString()}</p>
+                `;
+            }
+        }
+        
+        // Check status on page load
+        checkStatus();
+        // Refresh every 30 seconds
+        setInterval(checkStatus, 30000);
+    </script>
+</body>
+</html>

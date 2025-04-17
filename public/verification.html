@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Signup Verification</title>
+    <style>
+        .card { 
+            padding: 20px;
+            margin: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .success { color: green; }
+        .error { color: red; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2>Verify Your Registration</h2>
+        <div id="verificationForm">
+            <input type="email" id="emailInput" placeholder="Enter your email">
+            <button onclick="verifyRegistration()">Verify</button>
+        </div>
+        <div id="result"></div>
+        <div id="userStats" style="margin-top: 20px;"></div>
+    </div>
+
+    <script>
+        async function verifyRegistration() {
+            const email = document.getElementById('emailInput').value;
+            
+            try {
+                // Check user registration
+                const response = await fetch(`http://localhost:3000/api/verify/${email}`);
+                const data = await response.json();
+                const resultDiv = document.getElementById('result');
+                
+                if (response.ok) {
+                    resultDiv.innerHTML = `
+                        <div class="success">
+                            <h3>✅ Registration Verified!</h3>
+                            <p>Username: ${data.username}</p>
+                            <p>Email: ${data.email}</p>
+                            <p>Account Created: ${new Date(data.createdAt).toLocaleString()}</p>
+                        </div>
+                    `;
+
+                    // Get database stats
+                    const statsResponse = await fetch('http://localhost:3000/api/admin/verify-db');
+                    const statsData = await statsResponse.json();
+                    
+                    document.getElementById('userStats').innerHTML = `
+                        <h4>System Stats:</h4>
+                        <p>Total Users: ${statsData.usersStatus.totalUsers}</p>
+                        <p>Database: ${statsData.dbStatus.database}</p>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `
+                        <div class="error">
+                            <h3>❌ Verification Failed</h3>
+                            <p>${data.message}</p>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                document.getElementById('result').innerHTML = `
+                    <div class="error">
+                        <h3>❌ Error</h3>
+                        <p>${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>

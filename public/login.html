@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .options {
+            background: white;
+            padding: 1rem;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .options a {
+            text-decoration: none;
+            color: #333;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .options a:hover {
+            background-color: #1e3c72;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        input {
+            width: 100%;
+            padding: 0.8rem;
+            margin: 0.5rem 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        button {
+            width: 100%;
+            padding: 1rem;
+            background: #1e3c72;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        button:hover {
+            background: #2a5298;
+        }
+
+        .error { color: #d32f2f; margin: 0.5rem 0; }
+        .success { color: #388e3c; margin: 0.5rem 0; }
+
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        @media (max-width: 600px) {
+            .options {
+                flex-direction: column;
+            }
+            .options a {
+                width: 100%;
+                text-align: center;
+            }
+            .container {
+                margin: 1rem;
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Echo Power</h1>
+    </header>
+    
+    <nav class="options">
+        <a href="home.html">Home</a>
+        <a href="faqechopower.html">FAQ</a>
+        <a href="help%20page.html">Help</a>
+        <a href="rate%20calculation.html">Rate Calculator</a>
+        <a href="login.html">Login</a>
+        <a href="quickpaypage.html">Quickpay</a>
+        <a href="#">Profile</a>
+        <a href="about%20us%20page.html">About Us</a>
+        <a href="rate%20us%20page.html">Rate us</a>
+        <a href="signup.html">Sign Up</a>
+    </nav>
+
+    <div class="container">
+        <h1>Login</h1>
+        <form id="loginForm">
+            <input type="text" id="username" placeholder="Username" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <p id="error" class="error"></p>
+            <p id="success" class="success"></p>
+            <button type="submit">Login</button>
+        </form>
+        <p style="text-align:center; margin-top:20px;">New user? <a href="/signup.html">Sign up here</a></p>
+        <button id="testBtn">Test Connectivity</button>
+        <p id="testMsg"></p>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Echo Power. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        console.log('Login page loaded at:', new Date().toLocaleString());
+        
+        document.getElementById('loginForm').onsubmit = async (e) => {
+            e.preventDefault();
+            const errorDiv = document.getElementById('error');
+            const successDiv = document.getElementById('success');
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            errorDiv.textContent = ''; // Clear previous errors
+            successDiv.textContent = ''; // Clear previous success messages
+
+            console.log('Submitting login form:', { username, password }); // Debug log
+
+            try {
+                const response = await fetch('/api/login', {  // Changed to relative path
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({ username, password })
+                });
+
+                const data = await response.json();
+                console.log('Server response:', data);
+
+                if (response.ok) {
+                    successDiv.textContent = 'Login successful';
+                    // Save the username from the response to localStorage
+                    localStorage.setItem('loggedInUsername', data.username);
+                    console.log('Login successful, redirecting to home page...');
+                    window.location.href = '/home.html';
+                } else {
+                    errorDiv.textContent = data.message || 'Login failed';
+                }
+            } catch (error) {
+                console.error('Login error:', error); // Debug log
+                errorDiv.textContent = 'Connection failed - Please check if server is running';
+            }
+        };
+
+        // Update test connectivity function (uses relative URL already)
+        document.getElementById('testBtn').onclick = async () => {
+            const testMsg = document.getElementById('testMsg');
+            testMsg.textContent = 'Testing...';
+            try {
+                const response = await fetch('/api/test-server');  // Relative path
+                const data = await response.json();
+                console.log('Test response:', data);
+                testMsg.textContent = 'Server connected successfully';
+                testMsg.style.color = 'green';
+            } catch (error) {
+                console.error('Test error:', error);
+                testMsg.textContent = 'Server connection failed';
+                testMsg.style.color = 'red';
+            }
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Database Connection Test</title>
+    <style>
+        .success { color: green; }
+        .error { color: red; }
+    </style>
+</head>
+<body>
+    <h2>MongoDB Connection Test</h2>
+    <button onclick="testConnection()">Test Connection</button>
+    <div id="result"></div>
+
+    <script>
+        async function testConnection() {
+            try {
+                const response = await fetch('http://localhost:3000/api/test-db');
+                const data = await response.json();
+                const resultDiv = document.getElementById('result');
+                
+                if (data.success) {
+                    const info = data.connectionInfo;
+                    resultDiv.innerHTML = `
+                        <h3 class="success">Database Connected!</h3>
+                        <p>Database Name: ${info.dbName}</p>
+                        <p>Host: ${info.host}</p>
+                        <p>Port: ${info.port}</p>
+                        <p>Collections: ${info.collections.join(', ')}</p>
+                        <p>Users in Database: ${info.usersCount || 0}</p>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `<h3 class="error">Connection Failed</h3>`;
+                }
+            } catch (error) {
+                document.getElementById('result').innerHTML = 
+                    `<h3 class="error">Error: ${error.message}</h3>`;
+            }
+        }
+    </script>
+</body>
+</html>
